@@ -37,7 +37,7 @@ final class AuthController extends ApiController
     public function login(LoginRequest $request){
         $data = $request->validated();
         $user = User::where('email', $data['email'])->first();
-        if (!$user || Hash::check($data["password"], $user->password)){
+        if (!$user || !Hash::check($data["password"], $user->password)){
             throw ValidationException::withMessages([
                 'email'=>['The provided credentials are incorrect.'],
             ]);

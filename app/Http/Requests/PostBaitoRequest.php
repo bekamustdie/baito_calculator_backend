@@ -24,8 +24,11 @@ class PostBaitoRequest extends FormRequest
         return [
             'title'=>'string|required|min:4',
             'date'=>'required|date',
-            'time'=>'required|date_format:H:i',
-            'note'=>'sometimes|string|min:2'
+            'start_time'=>'required|date_format:H:i',
+            'end_time'=>'required|date_format:H:i',
+            'note'=>'sometimes|string|min:2',
+            'actual_work_hours'=>'sometimes|integer|min:1',
+            'hour_pay'=>'sometimes|integer|min:1'
         ];
     }
 }

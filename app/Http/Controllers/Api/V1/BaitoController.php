@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Api\ApiController;
 use App\Http\Requests\PostBaitoRequest;
 use App\Http\Resources\BaitoResource;
 use App\Services\BaitosService;
@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
 
-class BaitoController extends Controller
+class BaitoController extends ApiController
 {
     /**
      * Display a listing of the resource.
@@ -24,7 +24,7 @@ class BaitoController extends Controller
     public function index(Request $request)
     {
         $baitos = $request->user()->baito;
-        return BaitoResource::collection($baitos);
+        return $this->success(BaitoResource::collection($baitos));
     }
 
     /**
@@ -34,7 +34,7 @@ class BaitoController extends Controller
     {
         $user = $request->user();
         $baito = $user->baito()->create($request->validated());
-        return response()->json(new BaitoResource($baito));
+        return $this->success(new BaitoResource($baito));
     }
 
     /**
@@ -43,7 +43,7 @@ class BaitoController extends Controller
     public function show(Baito $baito)
     { 
         Gate::authorize('view', $baito);
-        return response()->json(new BaitoResource($baito));
+        return $this->success(new BaitoResource($baito));
     }
 
     /**
@@ -53,7 +53,7 @@ class BaitoController extends Controller
     {
         Gate::authorize('update', $baito);
         $baito->update($request->validated());
-        return response()->json(new BaitoResource($baito), 201);
+        return $this->success(new BaitoResource($baito));
     }
 
     /**
@@ -63,13 +63,32 @@ class BaitoController extends Controller
     {
         Gate::authorize('delete', $baito);
         $baito->delete();
-        return response()->noContent(204);
+        return $this->noContent();
     }
 
     public function getByMonth($year, $month){
         $startDate = Carbon::create($year, $month, 1)->startOfMonth();
         $endDate = Carbon::create($year, $month, 1)->endOfMonth();
     }
+
+    public function getByWeek($year, $month){
+        $startDate = Carbon::create($year, $month, 1)->startOfMonth();
+        $endDate = Carbon::create($year, $month, 1)->endOfMonth();
+    }
+
+    public function getByDay($year, $month){
+        $startDate = Carbon::create($year, $month, 1)->startOfMonth();
+        $endDate = Carbon::create($year, $month, 1)->endOfMonth();
+    }
+
+
+    public function markAsCompleted($year, $month){
+        $startDate = Carbon::create($year, $month, 1)->startOfMonth();
+        $endDate = Carbon::create($year, $month, 1)->endOfMonth();
+    }
+
+    
+
 
 
 }

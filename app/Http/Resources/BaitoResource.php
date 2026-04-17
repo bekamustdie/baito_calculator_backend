@@ -19,7 +19,10 @@ class BaitoResource extends JsonResource
             "user_id"=>$this->user_id,
             "title"=>$this->title,
             "date"=>$this->date,
-            "time"=>$this->time,
+            "start_time"=>$this->start_time,
+            "end_time"=>$this->end_time,
+            "actual_work_hours"=>$this->actual_work_hours,
+            "hour_pay"=>$this->hour_pay,
             "note"=>$this->note,
             "user"=>new UserResource($this->whenLoaded("user"))
         ];
