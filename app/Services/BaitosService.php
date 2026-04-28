@@ -5,8 +5,6 @@ use App\Models\User;
 
 class BaitosService{
 
-    
-
 	public function getAllBaitos($query, $request) {
     
         $user = $request->user();

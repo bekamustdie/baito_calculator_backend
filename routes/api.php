@@ -36,9 +36,10 @@ Route::prefix('v1')->group(function(){
         Route::get('/baitos/month/{year}/{month}', [BaitoController::class, 'getByMonth']);
         Route::get('/baitos/week/{date}',          [BaitoController::class, 'getByWeek']);
         Route::get('/baitos/day/{date}',           [BaitoController::class, 'getByDay']);
-        Route::patch('/baitos/{baito}/complete',   [BaitoController::class, 'markAsCompleted']);
-
+        
+        
         Route::apiResource('baitos', BaitoController::class);
+        Route::apiResource('work-place', BaitoController::class);
     });
 });
 

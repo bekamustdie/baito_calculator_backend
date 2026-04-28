@@ -11,6 +11,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\DB;
 
 
 class BaitoController extends ApiController
@@ -69,23 +70,27 @@ class BaitoController extends ApiController
     public function getByMonth($year, $month){
         $startDate = Carbon::create($year, $month, 1)->startOfMonth();
         $endDate = Carbon::create($year, $month, 1)->endOfMonth();
+        $baitos = Baito::where('user_id', '=', auth()->id())->whereBetween('date', [$startDate, $endDate])->get();
+        return $this->success(BaitoResource::collection($baitos));
+
     }
 
     public function getByWeek($year, $month){
-        $startDate = Carbon::create($year, $month, 1)->startOfMonth();
-        $endDate = Carbon::create($year, $month, 1)->endOfMonth();
+        $startDate = Carbon::create($year, $month, 1)->startOfWeek();
+        $endDate = Carbon::create($year, $month, 1)->endOfWeek();
+        $baitos = Baito::where('user_id', '=', auth()->id())->whereBetween('date', [$startDate, $endDate])->get();
+        return $this->success(BaitoResource::collection($baitos));
     }
 
-    public function getByDay($year, $month){
-        $startDate = Carbon::create($year, $month, 1)->startOfMonth();
-        $endDate = Carbon::create($year, $month, 1)->endOfMonth();
+    public function getByDay($year, $month, $day){
+        $startDate = Carbon::create($year, $month, 1)->startOfDay();
+        $endDate = Carbon::create($year, $month, 1)->endOfDay();
+        $baitos = Baito::where('user_id', '=', auth()->id())->whereBetween('date', [$startDate, $endDate])->get();
+        return $this->success(BaitoResource::collection($baitos));
     }
 
 
-    public function markAsCompleted($year, $month){
-        $startDate = Carbon::create($year, $month, 1)->startOfMonth();
-        $endDate = Carbon::create($year, $month, 1)->endOfMonth();
-    }
+
 
     
 
